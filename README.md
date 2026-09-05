@@ -35,6 +35,14 @@ Open PowerShell and paste one line. With no parameters it asks what to do (Check
 irm https://raw.githubusercontent.com/bluespam-cyber/exchange-auto-archive/main/Invoke-MailboxArchive.ps1 -OutFile "$env:TEMP\Invoke-MailboxArchive.ps1"; & "$env:TEMP\Invoke-MailboxArchive.ps1"
 ```
 
+Or clone the repo and use the launcher, which finds the script next to it (or downloads the current version when it is missing) and passes every argument through:
+
+```powershell
+git clone https://github.com/bluespam-cyber/exchange-auto-archive.git
+cd exchange-auto-archive
+.\Run-MailboxArchive.ps1
+```
+
 Or say everything on the command line:
 
 ```powershell
@@ -130,6 +138,7 @@ When the mailbox has no policy, or its policy has no move-to-archive rule, or yo
 
 ```
 Invoke-MailboxArchive.ps1   the tool
+Run-MailboxArchive.ps1      launcher: finds the tool next to it or downloads the current version
 docs/how-it-works.md        stages, blockers, verification, decision rules
 docs/sources.md             the Microsoft articles behind every check
 docs/troubleshooting.md     when the tool itself cannot proceed
