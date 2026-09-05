@@ -6,16 +6,24 @@ on:
   pull_request:
 
 jobs:
-  parse:
+  parse-pwsh:
     runs-on: windows-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        shell: [pwsh, powershell]
     steps:
       - uses: actions/checkout@v4
-      - name: Parse the script (${{ matrix.shell }})
-        shell: ${{ matrix.shell }}
+      - name: Parse the script (pwsh)
+        shell: pwsh
+        run: |
+          $tokens = $null; $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile("$PWD\Invoke-MailboxArchive.ps1", [ref]$tokens, [ref]$errors) | Out-Null
+          if ($errors.Count -gt 0) { $errors | ForEach-Object { Write-Host $_.ToString() }; exit 1 }
+          Write-Host "Parsed cleanly on $($PSVersionTable.PSVersion)"
+
+  parse-windows-powershell:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse the script (powershell)
+        shell: powershell
         run: |
           $tokens = $null; $errors = $null
           [System.Management.Automation.Language.Parser]::ParseFile("$PWD\Invoke-MailboxArchive.ps1", [ref]$tokens, [ref]$errors) | Out-Null
