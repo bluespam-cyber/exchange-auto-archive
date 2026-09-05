@@ -1,0 +1,5 @@
+MailboxArchiveRunner/
+*.log
+push-to-github.ps1
+Thumbs.db
+.DS_Store
